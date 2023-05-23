@@ -7,6 +7,7 @@ public sealed class ApiDbContext:DbContext
     public DbSet<Meetup> Meetups { get; set; }
 
     public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder

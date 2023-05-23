@@ -1,11 +1,20 @@
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var services =builder.Services;
-
-ApiConfiguration.SetConfiguration(configuration,services);
-
+var logging = builder.Logging;
+var logger=ApiConfiguration.SetConfiguration(configuration,services,logging);
 var app = builder.Build();
 
 ApiConfiguration.SetMiddleware(app);
 
-app.Run();
+try
+{
+    logger.Information("Application launch successfully");
+    app.Run();
+}
+
+catch (Exception ex)
+{
+    logger.Error("Application launch is failed with error: \"{Exception}\"",ex);
+}
+
