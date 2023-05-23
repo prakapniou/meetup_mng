@@ -1,4 +1,6 @@
-﻿namespace MeetupManager.Core.EF;
+﻿using MeetupManager.Core.EF.ModelConfigurations;
+
+namespace MeetupManager.Core.EF;
 
 public sealed class ApiDbContext:DbContext
 {
@@ -9,6 +11,9 @@ public sealed class ApiDbContext:DbContext
     public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        modelBuilder
+            .ApplyConfiguration(new SpeakerModelConfiguration())
+            .ApplyConfiguration(new SponsorModelConfiguration())
+            .ApplyConfiguration(new MeetupModelConfiguration());
     }
 }
