@@ -1,6 +1,6 @@
 ﻿namespace MeetupManager.Core.Configuration;
 
-public static class DataConfiguration
+public static class CoreConfiguration
 {
     public static void SetConfiguration(IConfiguration configuration, IServiceCollection services)
     {
