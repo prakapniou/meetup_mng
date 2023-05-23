@@ -1,13 +1,34 @@
-﻿namespace MeetupManager.Web.Configuration;
+﻿using ILogger = Serilog.ILogger;
 
+namespace MeetupManager.Web.Configuration;
+
+/// <summary>
+/// 
+/// </summary>
 public static class ApiConfiguration
 {
-    public static void SetConfiguration(IConfiguration configuration,IServiceCollection services)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <param name="services"></param>
+    /// <param name="logging"></param>
+    /// <returns></returns>
+    public static ILogger SetConfiguration(
+        IConfiguration configuration,
+        IServiceCollection services,
+        ILoggingBuilder logging)
     {
+        var logger = SetLogger(configuration,logging);
         SetServices(services);
         CoreConfiguration.SetConfiguration(configuration,services);
+        return logger;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="application"></param>
     public static void SetMiddleware(WebApplication application)
     {
         if (application.Environment.IsDevelopment())
@@ -47,5 +68,17 @@ public static class ApiConfiguration
                 }
             });
         });
+    }
+
+    private static ILogger SetLogger(IConfiguration configuration,ILoggingBuilder logging)
+    {
+        var logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
+
+        logging.ClearProviders();
+        logging.AddSerilog(logger);
+
+        return logger;
     }
 }
