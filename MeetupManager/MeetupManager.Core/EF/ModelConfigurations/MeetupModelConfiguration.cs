@@ -3,44 +3,42 @@
 public sealed class MeetupModelConfiguration : IEntityTypeConfiguration<Meetup>
 {
     public void Configure(EntityTypeBuilder<Meetup> builder)
-    {      
+    {
         builder
-            .ToTable("meetups")
-            .HasKey(_ => _.Id)
-            .HasName("Id");
+            .ToTable("meetups");
 
         builder
             .Property(_ => _.Id)
-            .HasColumnName("Id");
+            .HasColumnName("id");
 
         builder
             .Property(_ => _.Name)
-            .HasColumnName("Name")
+            .HasColumnName("name")
             .IsRequired();
 
         builder
             .Property(_ => _.Topic)
-            .HasColumnName("Topic")
+            .HasColumnName("topic")
             .IsRequired();
 
         builder
             .Property(_ => _.Description)
-            .HasColumnName("Description")
+            .HasColumnName("description")
             .IsRequired();
 
         builder
             .Property(_ => _.Schedule)
-            .HasColumnName("Schedule")
+            .HasColumnName("schedule")
             .IsRequired();
 
         builder
             .Property(_ => _.Address)
-            .HasColumnName("Address")
+            .HasColumnName("address")
             .IsRequired();
 
         builder
             .Property(_ => _.Spending)
-            .HasColumnName("Spending")
+            .HasColumnName("spending")
             .IsRequired();
     }
 }

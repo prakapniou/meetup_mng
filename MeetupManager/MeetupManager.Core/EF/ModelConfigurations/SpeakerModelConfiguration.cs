@@ -5,17 +5,15 @@ public sealed class SpeakerModelConfiguration : IEntityTypeConfiguration<Speaker
     public void Configure(EntityTypeBuilder<Speaker> builder)
     {
         builder
-            .ToTable("speakers")
-            .HasKey(_ => _.Id)
-            .HasName("Id");
+            .ToTable("speakers");
 
         builder
             .Property(_ => _.Id)
-            .HasColumnName("Id");
+            .HasColumnName("id");
 
         builder
             .Property(_ => _.Name)
-            .HasColumnName("Name")
+            .HasColumnName("name")
             .IsRequired();
     }
 }
