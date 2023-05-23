@@ -5,40 +5,35 @@ public sealed class MeetupModelConfiguration : IEntityTypeConfiguration<Meetup>
     public void Configure(EntityTypeBuilder<Meetup> builder)
     {
         builder
-            .ToTable("meetups");
+            .HasMany(_ => _.Speakers)
+            .WithMany();
 
         builder
-            .Property(_ => _.Id)
-            .HasColumnName("id");
-
+            .HasMany(_ => _.Sponsors)
+            .WithMany();
+                
         builder
             .Property(_ => _.Name)
-            .HasColumnName("name")
             .IsRequired();
 
         builder
             .Property(_ => _.Topic)
-            .HasColumnName("topic")
             .IsRequired();
 
         builder
             .Property(_ => _.Description)
-            .HasColumnName("description")
             .IsRequired();
 
         builder
             .Property(_ => _.Schedule)
-            .HasColumnName("schedule")
             .IsRequired();
 
         builder
             .Property(_ => _.Address)
-            .HasColumnName("address")
             .IsRequired();
 
         builder
             .Property(_ => _.Spending)
-            .HasColumnName("spending")
             .IsRequired();
     }
 }
