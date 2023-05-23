@@ -1,6 +1,4 @@
-﻿using MeetupManager.Core.EF.ModelConfigurations;
-
-namespace MeetupManager.Core.EF;
+﻿namespace MeetupManager.Core.EF;
 
 public sealed class ApiDbContext:DbContext
 {
