@@ -40,12 +40,14 @@ public static class ApiConfiguration
         application.UseHttpsRedirection();
         application.UseAuthorization();
         application.MapControllers();
+        application.UseMiddleware<ExceptionHandlerMiddleware>();
     }
 
     private static void SetServices(IServiceCollection services)
     {
         services.AddControllers();
         services.AddEndpointsApiExplorer();
+        services.AddTransient<ExceptionHandlerMiddleware>();
         services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo

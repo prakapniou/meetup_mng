@@ -8,7 +8,7 @@ var app = builder.Build();
 ApiConfiguration.SetMiddleware(app);
 
 try
-{
+{    
     logger.Information("Application launch successfully");
     app.Run();
 }
