@@ -22,6 +22,7 @@ public static class ApiConfiguration
         var logger = SetLogger(configuration,logging);
         SetServices(services);
         CoreConfiguration.SetConfiguration(configuration,services);
+        InfrastructureConfiguration.SetConfiguration(services);
         return logger;
     }
 

@@ -5,3 +5,4 @@ global using Serilog;
 global using Newtonsoft.Json;
 global using MeetupManager.Web.Models;
 global using System.Net;
+global using MeetupManager.Infrastructure.Configuration;
