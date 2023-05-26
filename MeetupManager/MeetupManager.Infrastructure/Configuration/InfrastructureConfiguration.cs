@@ -9,5 +9,8 @@ public static class InfrastructureConfiguration
     private static void SetServices(IServiceCollection services)
     {
         services.AddAutoMapper(typeof(ApiMapProfile));
+        services.AddScoped<IValidator<MeetupDto>,MeetupDtoValidator>();
+        services.AddScoped<IValidator<SpeakerDto>, SpeakerDtoValidator>();
+        services.AddScoped<IValidator<SponsorDto>, SponsorDtoValidator>();
     }
 }
