@@ -1,4 +1,5 @@
-﻿using ILogger = Serilog.ILogger;
+﻿using System.Reflection;
+using ILogger = Serilog.ILogger;
 
 namespace MeetupManager.Web.Configuration;
 
@@ -70,6 +71,10 @@ public static class ApiConfiguration
                     Url = new Uri("https://example.com/license")
                 }
             });
+
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            options.EnableAnnotations();
         });
     }
 

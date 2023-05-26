@@ -11,6 +11,8 @@ public sealed class MeetupDto:BaseDto
     public DateTime Spending { get; set; }
     public List<Guid> SpeakerIds { get; } = new();
     public List<Guid> SponsorIds { get; } = new();
+    public List<Speaker> SpeakerDtos { get; } = new();
+    public List<Sponsor> SponsorDtos { get; } = new();
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 }

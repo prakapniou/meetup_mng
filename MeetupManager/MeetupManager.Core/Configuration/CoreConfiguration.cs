@@ -5,6 +5,7 @@ public static class CoreConfiguration
     public static void SetConfiguration(IConfiguration configuration, IServiceCollection services)
     {
         SetDbContext(configuration, services);
+        SetServices(services);
     }
 
     private static void SetDbContext(IConfiguration configuration, IServiceCollection services)
@@ -19,5 +20,10 @@ public static class CoreConfiguration
             options.UseSqlServer(connectionString);
             options.EnableSensitiveDataLogging();
         });
+    }
+
+    private static void SetServices(IServiceCollection services)
+    {
+        services.AddScoped(typeof(IApiRepository<>), typeof(ApiRepository<>));
     }
 }

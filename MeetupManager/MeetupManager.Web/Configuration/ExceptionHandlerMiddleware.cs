@@ -43,7 +43,9 @@ public class ExceptionHandlerMiddleware:IMiddleware
         response.ContentType= "application/json";
 
         response.StatusCode=exception switch
-        {                
+        {
+            ModelNotValidException => (int)HttpStatusCode.UnprocessableEntity,
+            ContentNotFoundException => (int)HttpStatusCode.NotFound,
             InvalidOperationException => (int)HttpStatusCode.BadRequest,
             _ => (int)HttpStatusCode.InternalServerError,
         };
