@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MeetupManager.Core\MeetupManager.Core.csproj" />
+    <ProjectReference Include="..\MeetupManager.Infrastructure\MeetupManager.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

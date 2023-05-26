@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetupManager.Core", "MeetupManager.Core\MeetupManager.Core.csproj", "{78147B9A-F18B-42DB-AEDB-71A9E8B0E7D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetupManager.Web", "MeetupManager.Web\MeetupManager.Web.csproj", "{E2A68B83-4F78-466E-A571-9246585C4799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetupManager.Web", "MeetupManager.Web\MeetupManager.Web.csproj", "{E2A68B83-4F78-466E-A571-9246585C4799}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetupManager.Infrastructure", "MeetupManager.Infrastructure\MeetupManager.Infrastructure.csproj", "{53EE7B1C-E2BE-4136-B5B4-60F964CA6462}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E2A68B83-4F78-466E-A571-9246585C4799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2A68B83-4F78-466E-A571-9246585C4799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2A68B83-4F78-466E-A571-9246585C4799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53EE7B1C-E2BE-4136-B5B4-60F964CA6462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53EE7B1C-E2BE-4136-B5B4-60F964CA6462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53EE7B1C-E2BE-4136-B5B4-60F964CA6462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53EE7B1C-E2BE-4136-B5B4-60F964CA6462}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
