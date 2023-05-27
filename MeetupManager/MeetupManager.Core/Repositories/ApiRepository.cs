@@ -27,7 +27,6 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
         return result;
     }
 
-
     /// <summary>
     /// Get one <see cref="BaseModel"/> by expression.
     /// </summary>
@@ -55,8 +54,9 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// </returns>
     public async Task<T> CreateAsync(T model)
     {
-        var result = _dbSet.Add(model);
-        await _apiDb.SaveChangesAsync();
+        var result=_dbSet.Entry(model);
+        result.State = EntityState.Added;
+        await SaveDbChangesAsync();
         return result.Entity;
     }
 
@@ -70,8 +70,9 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// </returns>
     public async Task<T> UpdateAsync(T model)
     {
-        var result = _dbSet.Update(model);
-        await _apiDb.SaveChangesAsync();
+        var result = _dbSet.Entry(model);
+        result.State= EntityState.Modified;
+        await SaveDbChangesAsync();
         return result.Entity;
     }
 
@@ -91,7 +92,7 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
         var result = _dbSet.Remove(model) is not null;
 #pragma warning restore CS8604 // Possible null reference argument.
 
-        await _apiDb.SaveChangesAsync();
+        await SaveDbChangesAsync();
         return result;
     }
 
@@ -120,4 +121,17 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// </returns>
     public string GetModelType()
         => typeof(T).Name;
+
+
+    /// <summary>
+    /// Save db context changes.
+    /// </summary>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task result contains a <see cref="bool"/> result of db context changes saving.
+    /// </returns>
+    private async Task SaveDbChangesAsync()
+    {
+        var result = await _apiDb.SaveChangesAsync();
+        if (result is 0) throw new InvalidSavingChangesException("Changes saving is failed");
+    }
 }
