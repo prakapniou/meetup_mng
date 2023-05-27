@@ -8,4 +8,5 @@ global using MeetupManager.Core.EF.ModelConfigurations;
 global using System.Linq.Expressions;
 global using MeetupManager.Core.Interfaces;
 global using MeetupManager.Core.Repositories;
+global using MeetupManager.Core.Exceptions;
 
