@@ -44,7 +44,7 @@ public abstract class ApiService<Tmodel,Tdto>:IApiService<Tdto>
         return dto;
     }
 
-    public async Task<Tdto> CreateAsync(Tdto dto)
+    public virtual async Task<Tdto> CreateAsync(Tdto dto)
     {
         var validationResult = await _validator.ValidateAsync(dto);
 
@@ -60,7 +60,7 @@ public abstract class ApiService<Tmodel,Tdto>:IApiService<Tdto>
         return dtoResult;
     }
 
-    public async Task<Tdto> UpdateAsync(Guid id, Tdto dto)
+    public virtual async Task<Tdto> UpdateAsync(Guid id, Tdto dto)
     {
         if (!dto.Id.Equals(id))
             throw new InvalidOperationException($"'{_modelType}' Id '{dto.Id}' does not match Id '{id}' from request");

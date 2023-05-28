@@ -5,6 +5,7 @@ public sealed class SpeakerService:ApiService<Speaker,SpeakerDto>
     private readonly IApiRepository<Speaker> _rep;
     private readonly IMapper _mapper;
     private readonly ILogger<SpeakerService> _logger;
+    private readonly IValidator<SpeakerDto> _validator;
     private readonly string _modelType;
 
     public SpeakerService(
@@ -17,6 +18,7 @@ public sealed class SpeakerService:ApiService<Speaker,SpeakerDto>
         _rep= rep;
         _mapper= mapper;
         _logger=logger;
+        _validator= validator;
         _modelType=_rep.GetModelType();
     }
 

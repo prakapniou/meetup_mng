@@ -5,6 +5,7 @@ public sealed class SponsorService:ApiService<Sponsor,SponsorDto>
     private readonly IApiRepository<Sponsor> _rep;
     private readonly IMapper _mapper;
     private readonly ILogger<SponsorService> _logger;
+    private readonly IValidator<SponsorDto> _validator;
     private readonly string _modelType;
 
     public SponsorService(
@@ -17,6 +18,7 @@ public sealed class SponsorService:ApiService<Sponsor,SponsorDto>
         _rep= rep;
         _mapper= mapper;
         _logger=logger;
+        _validator= validator;
         _modelType=_rep.GetModelType();
     }
 

@@ -36,7 +36,7 @@ public class SponsorController:ControllerBase
         return Ok(dtos);
     }
 
-    /// <summary>Get <see cref="Speaker"/> by <paramref name="id"/> identifier.</summary>
+    /// <summary>Get <see cref="Sponsor"/> by <paramref name="id"/> identifier.</summary>
     /// <param name="id"></param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains a <see cref="Sponsor"/> instance.
