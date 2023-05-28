@@ -54,7 +54,7 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// </returns>
     public async Task<T> CreateAsync(T model)
     {
-        var result=_dbSet.Entry(model);
+        var result=_dbSet.Attach(model);
         result.State = EntityState.Added;
         await SaveDbChangesAsync();
         return result.Entity;
@@ -70,7 +70,7 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// </returns>
     public async Task<T> UpdateAsync(T model)
     {
-        var result = _dbSet.Entry(model);
+        var result = _dbSet.Attach(model);
         result.State= EntityState.Modified;
         await SaveDbChangesAsync();
         return result.Entity;
