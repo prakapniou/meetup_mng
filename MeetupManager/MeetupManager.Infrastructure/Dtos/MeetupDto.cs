@@ -9,8 +9,8 @@ public sealed class MeetupDto:BaseDto
     public string Schedule { get; set; }
     public string Address { get; set; }
     public DateTime Spending { get; set; }
-    public List<Guid> SpeakerIds { get; } = new();
-    public List<Guid> SponsorIds { get; } = new();
+    public List<Guid> SpeakerIds { get; set; } = new();
+    public List<Guid> SponsorIds { get; set; } = new();
     public List<Speaker> Speakers { get; } = new();
     public List<Sponsor> Sponsors { get; } = new();
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
