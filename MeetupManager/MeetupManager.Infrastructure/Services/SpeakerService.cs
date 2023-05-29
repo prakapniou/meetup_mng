@@ -24,11 +24,11 @@ public sealed class SpeakerService:ApiService<Speaker,SpeakerDto>
 
     public override async Task<IEnumerable<SpeakerDto>> GetAsync()
     {
-        var models = await _rep.GetAllByAsync()
+        var models = await _rep.GetAllByAsync(orderBy: _ => _.OrderBy(_=>_.Name))
             ?? throw new ContentNotFoundException($"'{_modelType}' collection not found");
 
         _logger.LogInformation("'{ModelType}' collection loaded successfully", _modelType);
-        var dtos = _mapper.Map<IEnumerable<SpeakerDto>>(models).OrderBy(_ => _.Name);
+        var dtos = _mapper.Map<IEnumerable<SpeakerDto>>(models);
         return dtos;
     }
 }

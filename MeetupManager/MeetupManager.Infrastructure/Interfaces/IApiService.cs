@@ -1,4 +1,6 @@
-﻿namespace MeetupManager.Infrastructure.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace MeetupManager.Infrastructure.Interfaces;
 
 public interface IApiService<Tdto> where Tdto : BaseDto
 {

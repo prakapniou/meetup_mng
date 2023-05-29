@@ -12,4 +12,5 @@ global using MeetupManager.Infrastructure.Interfaces;
 global using Microsoft.Extensions.Logging;
 global using System.Linq.Expressions;
 global using MeetupManager.Infrastructure.Services;
+global using Microsoft.EntityFrameworkCore;
 
