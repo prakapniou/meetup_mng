@@ -15,15 +15,24 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// Get <see cref="BaseModel"/> collection by expression.
     /// </summary>
     /// <param name="expression">
+    /// <param name="isTracking"">
     /// </param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains a <see cref="List{T}"/> that contains elements from the db context by expression.
     /// </returns>
-    public async Task<IEnumerable<T>> GetAllByAsync(Expression<Func<T, bool>>? expression = null)
+    public async Task<IEnumerable<T>> GetAllByAsync(
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        bool? isTracking=null)
     {
         IQueryable<T> query = _dbSet;
         query=(expression is null) ? query : query.Where(expression);
-        var result= await query.AsNoTracking().ToListAsync();
+        query=(include is null) ? query : include(query);
+        query=(orderBy is null) ? query : orderBy(query);
+        query=(isTracking is null ||isTracking is false) ? query.AsNoTracking() : query;
+
+        var result= await query.AsSplitQuery().ToListAsync();
         return result;
     }
 
@@ -31,14 +40,23 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// Get one <see cref="BaseModel"/> by expression.
     /// </summary>
     /// <param name="expression">
+    /// <param name="isTracking"">
     /// </param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains a <see cref="BaseModel"/> from the db context by expression.
     /// </returns>
-    public async Task<T> GetOneByAsync(Expression<Func<T, bool>> expression)
+    public async Task<T> GetOneByAsync(
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+        bool? isTracking = null)
     {
-        IQueryable<T> query = _dbSet;
-        var result=await query.FirstOrDefaultAsync(expression);
+        IQueryable<T> query = _dbSet; 
+        query=(expression is null) ? query : query.Where(expression);
+        query=(include is null) ? query : include(query);
+        query=(isTracking is null ||isTracking is false) ? query.AsNoTracking() : query;
+
+        var result=await query.AsSplitQuery().FirstOrDefaultAsync();
+          
 #pragma warning disable CS8603 // Possible null reference return.
         return result;
 #pragma warning restore CS8603 // Possible null reference return.
@@ -52,9 +70,9 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains a created instance of <see cref="BaseModel"/>.
     /// </returns>
-    public async Task<T> CreateAsync(T model)
+    public virtual async Task<T> CreateAsync(T model)
     {
-        var result=_dbSet.Attach(model);
+        var result=_dbSet.Entry(model);
         result.State = EntityState.Added;
         await SaveDbChangesAsync();
         return result.Entity;
@@ -68,10 +86,10 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains a updated instance of <see cref="BaseModel"/>.
     /// </returns>
-    public async Task<T> UpdateAsync(T model)
+    public virtual async Task<T> UpdateAsync(T model)
     {
-        var result = _dbSet.Attach(model);
-        result.State= EntityState.Modified;
+        var result = _dbSet.Entry(model);
+        result.State= EntityState.Modified;        
         await SaveDbChangesAsync();
         return result.Entity;
     }
@@ -129,9 +147,30 @@ public class ApiRepository<T> : IApiRepository<T> where T : BaseModel
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains a <see cref="bool"/> result of db context changes saving.
     /// </returns>
-    private async Task SaveDbChangesAsync()
+    /// <exception cref="InvalidSavingChangesException">
+    /// </exception>
+    protected async Task SaveDbChangesAsync()
     {
         var result = await _apiDb.SaveChangesAsync();
         if (result is 0) throw new InvalidSavingChangesException("Changes saving is failed");
+    }
+
+    /// <summary>
+    /// Attach the entity.
+    /// </summary>
+    /// <param name="model"></param>
+    public void Attach(BaseModel model)
+    {
+        _apiDb.Attach(model);    
+    }
+
+    /// <summary>
+    /// Set value to entity.
+    /// </summary>
+    /// <param name="objectModel"></param>
+    /// <param name="subjectModel"></param>
+    public void SetValues(T objectModel,T subjectModel)
+    {
+        _dbSet.Entry(objectModel).CurrentValues.SetValues(subjectModel);
     }
 }

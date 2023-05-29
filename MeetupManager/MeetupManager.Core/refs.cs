@@ -9,4 +9,4 @@ global using System.Linq.Expressions;
 global using MeetupManager.Core.Interfaces;
 global using MeetupManager.Core.Repositories;
 global using MeetupManager.Core.Exceptions;
-
+global using Microsoft.EntityFrameworkCore.Query;

@@ -10,7 +10,5 @@ public sealed class MeetupDtoValidator:AbstractValidator<MeetupDto>
         RuleFor(_ => _.Schedule).NotEmpty().NotNull();
         RuleFor(_ => _.Address).NotEmpty().NotNull();
         RuleFor(_ => _.Spending).NotEmpty().NotNull();
-        RuleFor(_ => _.SpeakerIds).NotNull();
-        RuleFor(_ => _.SponsorIds).NotNull();
     }
 }
