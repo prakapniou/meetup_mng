@@ -6,6 +6,7 @@
 [Route("api/[controller]")]
 [ApiController]
 [Produces("application/json")]
+[Authorize(AuthenticationSchemes = "Bearer")] //may be without schema, it sets by di
 public class SponsorController:ControllerBase
 {
     private readonly IApiService<SponsorDto> _service;

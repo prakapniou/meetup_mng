@@ -12,4 +12,6 @@ global using MeetupManager.Infrastructure.Interfaces;
 global using Microsoft.AspNetCore.Mvc;
 global using MeetupManager.Infrastructure.Exceptions;
 global using System.Reflection;
+global using IdentityServer4.AccessTokenValidation;
+global using Microsoft.AspNetCore.Authorization;
 
