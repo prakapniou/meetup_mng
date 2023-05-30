@@ -1,0 +1,7 @@
+- xml-comments
+- fix identity server with arch.
+- add kaffka
+- add jwt config. to appsettings
+- config endpoins
+- add instructional comments
+- config docker
