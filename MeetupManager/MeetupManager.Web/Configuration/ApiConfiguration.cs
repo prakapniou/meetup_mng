@@ -50,6 +50,7 @@ public static class ApiConfiguration
     {
         services.AddControllers();
         services.AddEndpointsApiExplorer();
+        services.AddScoped<IRabbitmqProducer,RabbitmqProducer>();
         services.AddTransient<ExceptionHandlerMiddleware>();
         services.AddSwaggerGen(options =>
         {

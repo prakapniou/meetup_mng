@@ -10,14 +10,19 @@
 public class MeetupController:ControllerBase
 {
     private readonly IApiService<MeetupDto> _service;
+    private readonly IRabbitmqProducer _rabbitmqProducer;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="service"></param>
-    public MeetupController(IApiService<MeetupDto> service)
+   /// <summary>
+   /// 
+   /// </summary>
+   /// <param name="service"></param>
+   /// <param name="rabbitmqProducer"></param>
+    public MeetupController(
+        IApiService<MeetupDto> service,
+        IRabbitmqProducer rabbitmqProducer)
     {
         _service= service;
+        _rabbitmqProducer= rabbitmqProducer;
     }
 
     /// <summary>
@@ -34,6 +39,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult<IEnumerable<MeetupDto>>> Get()
     {
         var dtos = await _service.GetAsync();
+        _rabbitmqProducer.SendMeetupMessage(dtos);
         return Ok(dtos);
     }
 
@@ -49,6 +55,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult<MeetupDto>> Get(Guid id)
     {
         var dto = await _service.GetByIdAsync(id);
+        _rabbitmqProducer.SendMeetupMessage(dto);
         return Ok(dto);
     }
 
@@ -65,6 +72,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult> Post([FromBody] MeetupDto dto)
     {
         var result = await _service.CreateAsync(dto);
+        _rabbitmqProducer.SendMeetupMessage(result);
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
@@ -80,6 +88,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult> Put(Guid id, [FromBody] MeetupDto dto)
     {
         var result = await _service.UpdateAsync(id, dto);
+        _rabbitmqProducer.SendMeetupMessage(result);
         return AcceptedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 

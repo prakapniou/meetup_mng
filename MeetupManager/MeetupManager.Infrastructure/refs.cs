@@ -13,4 +13,6 @@ global using Microsoft.Extensions.Logging;
 global using System.Linq.Expressions;
 global using MeetupManager.Infrastructure.Services;
 global using Microsoft.EntityFrameworkCore;
-
+global using Newtonsoft.Json;
+global using RabbitMQ.Client;
+global using System.Text;

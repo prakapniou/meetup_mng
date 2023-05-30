@@ -5,3 +5,4 @@
 - config endpoins
 - add instructional comments
 - config docker
+- add rabbitmq service
