@@ -6,23 +6,23 @@
 [Route("api/[controller]")]
 [ApiController]
 [Produces("application/json")]
-[Authorize(AuthenticationSchemes ="Bearer")] //may be without schema, it sets by di
+//[Authorize(AuthenticationSchemes ="Bearer")] //may be without schema, it sets by di
 public class MeetupController:ControllerBase
 {
     private readonly IApiService<MeetupDto> _service;
-    private readonly IRabbitmqProducer _rabbitmqProducer;
+    private readonly IMessageBrokerService _broker;
 
    /// <summary>
    /// 
    /// </summary>
    /// <param name="service"></param>
-   /// <param name="rabbitmqProducer"></param>
+   /// <param name="broker"></param>
     public MeetupController(
         IApiService<MeetupDto> service,
-        IRabbitmqProducer rabbitmqProducer)
+        IMessageBrokerService broker)
     {
         _service= service;
-        _rabbitmqProducer= rabbitmqProducer;
+        _broker= broker;
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult<IEnumerable<MeetupDto>>> Get()
     {
         var dtos = await _service.GetAsync();
-        _rabbitmqProducer.SendMeetupMessage(dtos);
+        _broker.SendMessage(dtos);
         return Ok(dtos);
     }
 
@@ -55,7 +55,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult<MeetupDto>> Get(Guid id)
     {
         var dto = await _service.GetByIdAsync(id);
-        _rabbitmqProducer.SendMeetupMessage(dto);
+        _broker.SendMessage(dto);
         return Ok(dto);
     }
 
@@ -72,7 +72,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult> Post([FromBody] MeetupDto dto)
     {
         var result = await _service.CreateAsync(dto);
-        _rabbitmqProducer.SendMeetupMessage(result);
+        _broker.SendMessage(result);
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
@@ -88,7 +88,7 @@ public class MeetupController:ControllerBase
     public async Task<ActionResult> Put(Guid id, [FromBody] MeetupDto dto)
     {
         var result = await _service.UpdateAsync(id, dto);
-        _rabbitmqProducer.SendMeetupMessage(result);
+        _broker.SendMessage(result);
         return AcceptedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 

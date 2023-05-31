@@ -15,5 +15,6 @@ public static class InfrastructureConfiguration
         services.AddScoped<IApiService<SpeakerDto>, SpeakerService>();
         services.AddScoped<IApiService<SponsorDto>, SponsorService>();
         services.AddScoped<IApiService<MeetupDto>, MeetupService>();
+        services.AddScoped<IMessageBrokerService,MessageBrokerService>();
     }
 }

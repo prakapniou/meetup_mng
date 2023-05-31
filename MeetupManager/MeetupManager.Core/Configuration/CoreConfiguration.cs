@@ -1,4 +1,6 @@
-﻿namespace MeetupManager.Core.Configuration;
+﻿using MeetupManager.Core.Utilities.MessageBrocker;
+
+namespace MeetupManager.Core.Configuration;
 
 public static class CoreConfiguration
 {
@@ -25,5 +27,6 @@ public static class CoreConfiguration
     private static void SetServices(IServiceCollection services)
     {
         services.AddScoped(typeof(IApiRepository<>), typeof(ApiRepository<>));
+        services.AddScoped<IMessageBroker,MessageBroker>();
     }
 }

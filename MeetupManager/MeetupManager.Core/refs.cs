@@ -10,3 +10,7 @@ global using MeetupManager.Core.Interfaces;
 global using MeetupManager.Core.Repositories;
 global using MeetupManager.Core.Exceptions;
 global using Microsoft.EntityFrameworkCore.Query;
+global using Newtonsoft.Json;
+global using RabbitMQ.Client;
+global using RabbitMQ.Client.Events;
+global using System.Text;

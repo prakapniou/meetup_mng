@@ -6,18 +6,23 @@
 [Route("api/[controller]")]
 [ApiController]
 [Produces("application/json")]
-[Authorize(AuthenticationSchemes = "Bearer")] //may be without schema, it sets by di
+//[Authorize(AuthenticationSchemes = "Bearer")] //may be without schema, it sets by di
 public class SponsorController:ControllerBase
 {
     private readonly IApiService<SponsorDto> _service;
+    private readonly IMessageBrokerService _broker;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="service"></param>
-    public SponsorController(IApiService<SponsorDto> service)
+    /// <param name="broker"></param>
+    public SponsorController(
+        IApiService<SponsorDto> service,
+        IMessageBrokerService broker)
     {
         _service= service;
+        _broker=broker;
     }
 
     /// <summary>
@@ -34,6 +39,7 @@ public class SponsorController:ControllerBase
     public async Task<ActionResult<IEnumerable<SponsorDto>>> Get()
     {
         var dtos = await _service.GetAsync();
+        _broker.SendMessage(dtos);
         return Ok(dtos);
     }
 
@@ -49,6 +55,7 @@ public class SponsorController:ControllerBase
     public async Task<ActionResult<SponsorDto>> Get(Guid id)
     {
         var dto = await _service.GetByIdAsync(id);
+        _broker.SendMessage(dto);
         return Ok(dto);
     }
 
@@ -65,6 +72,7 @@ public class SponsorController:ControllerBase
     public async Task<ActionResult> Post([FromBody] SponsorDto dto)
     {
         var result = await _service.CreateAsync(dto);
+        _broker.SendMessage(result);
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
@@ -80,6 +88,7 @@ public class SponsorController:ControllerBase
     public async Task<ActionResult> Put(Guid id, [FromBody] SponsorDto dto)
     {
         var result = await _service.UpdateAsync(id, dto);
+        _broker.SendMessage(result);
         return AcceptedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 

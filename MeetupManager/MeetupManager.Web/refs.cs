@@ -14,4 +14,3 @@ global using MeetupManager.Infrastructure.Exceptions;
 global using System.Reflection;
 global using IdentityServer4.AccessTokenValidation;
 global using Microsoft.AspNetCore.Authorization;
-global using MeetupManager.Infrastructure.Utilities.RabbitmqProducer;
